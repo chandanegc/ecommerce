@@ -1,0 +1,23 @@
+<div class="cart-container">
+  @if(!cartItems?.length){
+    <div style="height: 100vh; display: flex; align-items: center; justify-content: center;">
+      <h1>Cart is empty.</h1>
+    </div>
+  }
+  @else{
+    @for(item of cartItems;track item; ){
+    <div class="cart-item">
+      <p>{{item.id}}</p>
+      <img [src]="item?.img" width="60px" >
+      <div class="cart-item-about">
+        <p>{{item?.name}}</p>
+        <p>${{item?.price}}</p>
+        <p>{{item?.quantity}}</p>
+        <button (click)="removeToCart(item.id)">Remove</button>
+      </div>
+    </div>
+  }
+
+  <button class="checkout-btn" (click)="checkout()" [disabled]="!cartItems.length">Checkout</button>
+}
+</div>

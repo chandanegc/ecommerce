@@ -1,0 +1,15 @@
+
+@if(!loading()){
+  <div class="product-container">@for(product of products(); track product){
+      <card [item] ="product"></card>
+  }
+  </div>
+}
+@else {
+  <div style="height: 100vh; display: flex; align-items: center; justify-content: center;">
+    <h1>Loading...</h1>
+  </div>
+}
+
+
+

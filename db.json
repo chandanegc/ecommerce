@@ -1,0 +1,128 @@
+{
+  "$schema": "./node_modules/json-server/schema.json",
+  "posts": [
+    { "id": "1", "title": "a title", "views": 100 },
+    { "id": "2", "title": "another title", "views": 200 }
+  ],
+  "comments": [
+    { "id": "1", "text": "a comment about post 1", "postId": "1" },
+    { "id": "2", "text": "another comment about post 1", "postId": "1" }
+  ],
+  "profile": {
+    "name": "typicode"
+  },
+  "products": [
+    {
+      "id": 1,
+      "name": "Wireless Headphones",
+      "price": "1999",
+      "img": "https://picsum.photos/id/180/300/200",
+      "category": "Electronics",
+      "description": "High quality wireless headphones with noise cancellation."
+    },
+    {
+      "id": 2,
+      "name": "Smart Watch",
+      "price": "2499",
+      "img": "https://picsum.photos/id/1062/300/200",
+      "category": "Electronics",
+      "description": "Track your fitness and notifications with this smart watch."
+    },
+    {
+      "id": 3,
+      "name": "Running Shoes",
+      "price": "1499",
+      "img": "https://picsum.photos/id/21/300/200",
+      "category": "Footwear",
+      "description": "Comfortable and lightweight running shoes."
+    },
+    {
+      "id": 4,
+      "name": "Backpack",
+      "price": "999",
+      "img": "https://picsum.photos/id/433/300/200",
+      "category": "Accessories",
+      "description": "Durable backpack for travel and daily use."
+    },
+    {
+      "id": 5,
+      "name": "Sunglasses",
+      "price": "799",
+      "img": "https://picsum.photos/id/250/300/200",
+      "category": "Fashion",
+      "description": "Stylish sunglasses with UV protection."
+    },
+    {
+      "id": 6,
+      "name": "Bluetooth Speaker",
+      "price": "1299",
+      "img": "https://picsum.photos/id/1080/300/200",
+      "category": "Electronics",
+      "description": "Portable speaker with powerful sound."
+    },
+    {
+      "id": 7,
+      "name": "Laptop Stand",
+      "price": "699",
+      "img": "https://picsum.photos/id/0/300/200",
+      "category": "Office",
+      "description": "Ergonomic laptop stand for better posture."
+    },
+    {
+      "id": 8,
+      "name": "Water Bottle",
+      "price": "299",
+      "img": "https://picsum.photos/id/292/300/200",
+      "category": "Lifestyle",
+      "description": "Reusable eco-friendly water bottle."
+    },
+    {
+      "id": 9,
+      "name": "Gaming Mouse",
+      "price": "899",
+      "img": "https://picsum.photos/id/366/300/200",
+      "category": "Electronics",
+      "description": "High precision gaming mouse with RGB lights."
+    },
+    {
+      "id": 10,
+      "name": "T-Shirt",
+      "price": "499",
+      "img": "https://picsum.photos/id/1005/300/200",
+      "category": "Clothing",
+      "description": "Comfortable cotton t-shirt for everyday wear."
+    },
+    {
+      "id": 11,
+      "name": "T-Shirt",
+      "price": "499",
+      "img": "https://picsum.photos/id/1005/300/200",
+      "category": "Clothing",
+      "description": "Comfortable cotton t-shirt for everyday wear."
+    },
+    {
+      "id": 12,
+      "name": "T-Shirt",
+      "price": "499",
+      "img": "https://picsum.photos/id/1005/300/200",
+      "category": "Clothing",
+      "description": "Comfortable cotton t-shirt for everyday wear."
+    },
+    {
+      "id": 13,
+      "name": "T-Shirt",
+      "price": "499",
+      "img": "https://picsum.photos/id/1005/300/200",
+      "category": "Clothing",
+      "description": "Comfortable cotton t-shirt for everyday wear."
+    },
+    {
+      "id": 14,
+      "name": "T-Shirt",
+      "price": "499",
+      "img": "https://picsum.photos/id/1005/300/200",
+      "category": "Clothing",
+      "description": "Comfortable cotton t-shirt for everyday wear."
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+<div class="card-container">
+  <img [src]="item?.img" class="card-img"  width="100%">
+  <div class="about">
+    <h3>{{item?.name}}</h3>
+    <h3>Price: ${{item?.price}}</h3>
+    <p>{{item?.description}} 
+    </p>
+    <button class="cart-btn" (click)="addToCart(item)">Add to cart</button>
+  </div>
+</div>

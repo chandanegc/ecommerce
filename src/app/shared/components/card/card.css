@@ -1,0 +1,39 @@
+.card-container{
+  max-width: 200px;
+  border: 1px solid gray;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  height: 350px;
+}
+.about{
+  padding: 5px;
+}
+.cart-btn{
+  padding: 5px;
+  background-color: rgb(48, 136, 236);
+  border-radius: 10px;
+  border:1px solid gray;
+  color: white;
+  font-size: 15px;
+  margin: 10px;
+  cursor: pointer;
+}
+.cart-btn:active {
+  border:none;
+}
+img{
+  height: 200px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+
+}
+h3{
+  padding: 0;
+  /* line-height: 0; */
+  margin: 0;
+}
+
+p{
+  padding: 0px;
+  margin: 0px;
+}
