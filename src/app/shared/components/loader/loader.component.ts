@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { LoaderService } from '../../../core/service/loader.service';
+import { UIStore } from '../../../store/ui.store';
 
 @Component({
   selector: 'app-loader',
   standalone: true,
   template: `
-    @if (loader.loading()) {
+    @if (uiStore.loading()) {
       <div class="loader-overlay" aria-live="polite" aria-label="Loading">
         <div class="loader-spinner">
           <div class="spinner-ring"></div>
@@ -78,5 +78,5 @@ import { LoaderService } from '../../../core/service/loader.service';
   `],
 })
 export class LoaderComponent {
-  protected loader = inject(LoaderService);
+  protected uiStore = inject(UIStore);
 }

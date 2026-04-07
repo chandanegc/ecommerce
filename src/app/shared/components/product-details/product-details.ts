@@ -3,7 +3,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProductStore } from '../../../store/product.store';
 import { CartStore } from '../../../store/cart.store';
 import { Product } from '../../models/product.model';
-import { ProductService } from '../../../core/service/product.service';
+import { ProductService } from '../../../core/services/product.service';
 import { signal } from '@angular/core';
 
 @Component({

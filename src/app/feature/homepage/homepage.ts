@@ -10,11 +10,9 @@ import { ProductStore } from '../../store/product.store';
   styleUrl: './homepage.css',
 })
 export class Homepage implements OnInit {
-  // Inject the global SignalStore — all state is reactive signals
   protected store = inject(ProductStore);
 
   ngOnInit(): void {
-    // Triggers API call only once — subsequent calls are no-ops (loaded guard)
     this.store.loadProducts();
   }
 

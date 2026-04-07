@@ -7,7 +7,7 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { AlertsService } from '../core/service/alerts.service';
+import { UIStore } from './ui.store';
 import { CartItem } from '../shared/models/product.model';
 
 const STORAGE_KEY = 'cart_items';
@@ -30,21 +30,20 @@ function saveToStorage(items: CartItem[]): void {
 }
 
 export const CartStore = signalStore(
-  { providedIn: 'root' }, // ← singleton
+  { providedIn: 'root' },
   withState<CartState>({ items: [] }),
 
   withComputed((store) => ({
-    /** Number of unique items in cart */
     cartCount: computed(() => store.items().length),
 
-    /** Grand total price */
     cartTotal: computed(() =>
       store.items().reduce((sum, item) => sum + item.price * item.quantity, 0)
     ),
+
+
   })),
 
-  withMethods((store, alerts = inject(AlertsService)) => ({
-    /** Add item or increment quantity */
+  withMethods((store, uiStore = inject(UIStore)) => ({
     addToCart(item: Omit<CartItem, 'quantity'>): void {
       const current = store.items();
       const existing = current.find((i) => i.id === item.id);
@@ -60,29 +59,28 @@ export const CartStore = signalStore(
 
       patchState(store, { items: updated });
       saveToStorage(updated);
-      alerts.notify('Added to cart ✓', 'success');
+      uiStore.notify('Added to cart ✓', 'success');
     },
 
-    /** Remove item completely */
     removeFromCart(id: number): void {
       const updated = store.items().filter((i) => i.id !== id);
       patchState(store, { items: updated });
       saveToStorage(updated);
-      alerts.notify('Removed from cart', 'success');
+      uiStore.notify('Removed from cart', 'success');
     },
 
-    /** Empty the entire cart */
     clearCart(): void {
       patchState(store, { items: [] });
       localStorage.removeItem(STORAGE_KEY);
-      alerts.notify('Cart cleared', 'success');
+      uiStore.notify('Cart cleared', 'success');
     },
+
   })),
 
   withHooks({
-    /** Restore cart from localStorage on init */
     onInit(store) {
       patchState(store, { items: loadFromStorage() });
     },
   })
+
 );

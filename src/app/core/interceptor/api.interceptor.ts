@@ -1,21 +1,20 @@
 import { HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { finalize } from 'rxjs';
-import { LoaderService } from '../service/loader.service';
+import { UIStore } from '../../store/ui.store';
 
 export const apiInterceptor: HttpInterceptorFn = (req, next) => {
-  const loader = inject(LoaderService);
+  const uiStore = inject(UIStore);
 
-  // Attach auth header
   const authReq = req.clone({
     setHeaders: {
       Authorization: 'Bearer my-token',
     },
   });
 
-  loader.show();
+  uiStore.showLoader();
 
   return next(authReq).pipe(
-    finalize(() => loader.hide()) // always hide — success OR error
+    finalize(() => uiStore.hideLoader()) // always hide — success OR error
   );
 };

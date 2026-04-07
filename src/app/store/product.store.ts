@@ -5,62 +5,64 @@ import {
   withComputed,
   withMethods,
   withState,
+  withHooks,
 } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
-import { pipe, switchMap, tap } from 'rxjs';
-import { ProductService } from '../core/service/product.service';
+import { pipe, switchMap, tap, EMPTY } from 'rxjs';
+import { ProductService } from '../core/services/product.service';
 import { Product } from '../shared/models/product.model';
+import { UIStore } from './ui.store';
 
 export interface ProductState {
   products: Product[];
   filteredProducts: Product[];
   activeCategory: string;
+  selectedProductId: string | null;
   loading: boolean;
   error: string | null;
-  loaded: boolean; // guard: prevents duplicate API calls
+  loaded: boolean;
 }
 
 const initialState: ProductState = {
   products: [],
   filteredProducts: [],
   activeCategory: 'all',
+  selectedProductId: null,
   loading: false,
   error: null,
   loaded: false,
 };
 
 export const ProductStore = signalStore(
-  { providedIn: 'root' }, // ← singleton: shared across all components
+  { providedIn: 'root' },
   withState(initialState),
 
   withComputed((store) => ({
-    /** Unique category list derived from all products */
     categories: computed(() => {
       const cats = store.products().map((p) => p.category);
-      return ['all', ...new Set(cats)];
+      return ['All', ...new Set(cats)];
     }),
 
-    /** Total product count for current filter */
     productCount: computed(() => store.filteredProducts().length),
+
+    selectedProduct: computed(() => {
+      const id = store.selectedProductId();
+      return id ? store.products().find((p) => String(p.id) === String(id)) : null;
+    }),
   })),
 
-  withMethods((store, productService = inject(ProductService)) => ({
-    /**
-     * Load products from API — called once.
-     * Uses rxMethod for reactive RxJS integration with signal store.
-     */
+  withMethods((store, productService = inject(ProductService), uiStore = inject(UIStore)) => ({
+
     loadProducts: rxMethod<void>(
       pipe(
         tap(() => {
-          // Skip if already loaded (single API call guarantee)
           if (store.loaded()) return;
           patchState(store, { loading: true, error: null });
         }),
         switchMap(() => {
-          // Guard: if already loaded, do nothing
           if (store.loaded()) {
-            return [];
+            return EMPTY;
           }
           return productService.getProducts().pipe(
             tapResponse({
@@ -73,10 +75,12 @@ export const ProductStore = signalStore(
                 });
               },
               error: (err: any) => {
+                const message = err?.message ?? 'Failed to load products';
                 patchState(store, {
                   loading: false,
-                  error: err?.message ?? 'Failed to load products',
+                  error: message,
                 });
+                uiStore.notify(message, 'error');
               },
             })
           );
@@ -84,26 +88,36 @@ export const ProductStore = signalStore(
       )
     ),
 
-    /** Filter products by category */
+    setSelectedProduct(id: string | null): void {
+      patchState(store, { selectedProductId: id });
+    },
+
     filterByCategory(category: string): void {
       const all = store.products();
       const filtered =
-        category === 'all' ? all : all.filter((p) => p.category === category);
+        category === 'All' ? all : all.filter((p) => p.category === category);
       patchState(store, { filteredProducts: filtered, activeCategory: category });
     },
 
-    /** Filter products by search query */
     searchProducts(query: string): void {
       const all = store.products();
       const filtered = query.trim()
-        ? all.filter((p) => p.name.toLowerCase().includes(query.toLowerCase()))
+        ? all.filter((p: any) => {
+          const queryLower = query.toLowerCase();
+          return ['description', 'name', 'category', 'price'].some((field: string) => p[field].toLowerCase().includes(queryLower));
+        })
         : all;
-      patchState(store, { filteredProducts: filtered, activeCategory: 'all' });
+      patchState(store, { filteredProducts: filtered, activeCategory: 'All' });
     },
 
-    /** Get a single product by id from the store (no extra API call) */
     getProductById(id: string): Product | undefined {
       return store.products().find((p) => String(p.id) === String(id));
     },
-  }))
+  })),
+
+  withHooks({
+    onInit(store) {
+      store.loadProducts();
+    },
+  })
 );

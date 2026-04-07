@@ -1,7 +1,7 @@
 import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { catchError, throwError } from 'rxjs';
-import { AlertsService } from '../service/alerts.service';
+import { UIStore } from '../../store/ui.store';
 
 function getErrorMessage(err: HttpErrorResponse): string {
   switch (err.status) {
@@ -25,12 +25,12 @@ function getErrorMessage(err: HttpErrorResponse): string {
 }
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
-  const alerts = inject(AlertsService);
+  const uiStore = inject(UIStore);
 
   return next(req).pipe(
     catchError((err: HttpErrorResponse) => {
       const message = getErrorMessage(err);
-      alerts.notify(message, 'error', 5000);
+      uiStore.notify(message, 'error', 5000);
       console.error('[HTTP Error]', err);
       return throwError(() => err);
     })

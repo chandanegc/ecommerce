@@ -1,0 +1,14 @@
+
+<div class="map-container">
+    <div id="map" style="width: 100vw; height: 97vh;"></div>
+    <div style="position: absolute; top: 10px; left: 10px; z-index: 1000; margin-top: 150px;">
+       <div style="display: flex; gap: 10px; flex-direction: column;">
+         <app-input-box label="Enter your location" (valueChange)="onLocationChange($event)" placeholder="Enter your location"></app-input-box>
+       </div>
+       
+        <div class="suggestion">
+            <app-suggetion-box (select)="onSuggestionClick($event)"  [items]="suggestion()" labelKey="name"></app-suggetion-box>
+        </div>
+       
+    </div>
+</div>

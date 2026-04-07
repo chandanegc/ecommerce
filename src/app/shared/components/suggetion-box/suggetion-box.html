@@ -1,0 +1,10 @@
+<div class="suggestions" *ngIf="items?.length">
+  <div
+    class="suggestion-item"
+    *ngFor="let item of items" 
+    (click)="onSelect(item)"
+  >
+ <span style="color: black; font-weight: bold;">{{ item.placeName }}</span> 
+ <span style="color: black; font-size: 12px;">{{ item.placeAddress }}</span><br>
+  </div>
+</div>

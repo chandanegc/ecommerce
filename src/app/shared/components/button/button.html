@@ -1,0 +1,6 @@
+<button
+  [disabled]="disabled || loading"
+  [ngClass]="['btn', variant]"
+>
+  {{ loading ? 'Loading...' : label }}
+</button>

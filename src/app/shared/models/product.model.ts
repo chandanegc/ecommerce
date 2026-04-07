@@ -8,10 +8,8 @@ export interface Product {
   img: string;
 }
 
-/** Cart item extends Product with a quantity field */
 export interface CartItem extends Product {
   quantity: number;
 }
 
-// Keep legacy alias so existing code doesn't break during migration
 export type productIR = Product;

@@ -1,14 +1,9 @@
 import { ErrorHandler, inject, Injectable, NgZone } from '@angular/core';
-import { AlertsService } from '../service/alerts.service';
+import { UIStore } from '../../store/ui.store';
 
-/**
- * GlobalErrorHandler catches all uncaught JavaScript errors and
- * Angular lifecycle errors that aren't caught by the HTTP interceptor.
- */
 @Injectable()
 export class GlobalErrorHandler implements ErrorHandler {
-  // Use inject() for lazy injection (avoids circular dependency with NgZone)
-  private alerts = inject(AlertsService);
+  private uiStore = inject(UIStore);
   private zone = inject(NgZone);
 
   handleError(error: unknown): void {
@@ -16,7 +11,7 @@ export class GlobalErrorHandler implements ErrorHandler {
 
     // Run inside NgZone so signal updates trigger change detection
     this.zone.run(() => {
-      this.alerts.notify(message, 'error', 6000);
+      this.uiStore.notify(message, 'error', 6000);
     });
 
     // Always re-log to console for debugging

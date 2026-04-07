@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { AlertsService } from '../../../core/service/alerts.service';
+import { UIStore } from '../../../store/ui.store';
 
 @Component({
   selector: 'app-alert',
   standalone: true,
   template: `
-    @if (alerts.alert(); as alert) {
+    @if (uiStore.alert(); as alert) {
       <div
         class="alert-toast"
         [class]="'alert-toast alert-' + alert.status"
@@ -14,7 +14,7 @@ import { AlertsService } from '../../../core/service/alerts.service';
       >
         <span class="alert-icon">{{ iconFor(alert.status) }}</span>
         <span class="alert-text">{{ alert.text }}</span>
-        <button class="alert-close" (click)="alerts.dismiss()" aria-label="Dismiss">✕</button>
+        <button class="alert-close" (click)="uiStore.dismissAlert()" aria-label="Dismiss">✕</button>
       </div>
     }
   `,
@@ -69,7 +69,7 @@ import { AlertsService } from '../../../core/service/alerts.service';
   `],
 })
 export class AlertComponent {
-  protected alerts = inject(AlertsService);
+  protected uiStore = inject(UIStore);
 
   iconFor(status: string): string {
     const icons: Record<string, string> = {

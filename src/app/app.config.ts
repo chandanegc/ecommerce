@@ -12,9 +12,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    // HTTP client with interceptor chain: auth → error handling
     provideHttpClient(withInterceptors([apiInterceptor, errorInterceptor])),
-    // Global uncaught error handler (replaces default Angular ErrorHandler)
     { provide: ErrorHandler, useClass: GlobalErrorHandler },
     provideStore(),
   ],
