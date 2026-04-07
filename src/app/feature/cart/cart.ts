@@ -1,25 +1,21 @@
-import { Component } from '@angular/core';
-import { Cart as ServiceCart } from '../../core/service/cart';
+import { Component, inject } from '@angular/core';
+import { CartStore } from '../../store/cart.store';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
+  imports: [],
   templateUrl: './cart.html',
   styleUrl: './cart.css',
 })
 export class Cart {
+  protected cartStore = inject(CartStore);
 
-  constructor(public cart: ServiceCart) {}
-
-  get cartItems() {
-    return this.cart.cartItems;
+  removeItem(id: number): void {
+    this.cartStore.removeFromCart(id);
   }
 
-  removeToCart(id: number) {
-    this.cart.removeFromCart(id);
-  }
-
-  checkout(){
-    this.cart.emptyCart();
+  checkout(): void {
+    this.cartStore.clearCart();
   }
 }

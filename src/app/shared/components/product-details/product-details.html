@@ -1,0 +1,30 @@
+@if (loading()) {
+  <div class="loading-state">
+    <p>Loading product...</p>
+  </div>
+} @else if (item()) {
+  <div class="product-container">
+    <a routerLink="/home" class="back-link">← Back to Products</a>
+
+    <div class="product-layout">
+      <div class="image-section">
+        <img [src]="item()!.img" [alt]="item()!.name" />
+      </div>
+
+      <div class="details-section">
+        <span class="category-tag">{{ item()!.category }}</span>
+        <h1>{{ item()!.name }}</h1>
+        <p class="description">{{ item()!.description }}</p>
+        <h2 class="price">₹{{ item()!.price }}</h2>
+        <button class="add-to-cart-btn" (click)="addToCart()">
+          🛒 Add to Cart
+        </button>
+      </div>
+    </div>
+  </div>
+} @else {
+  <div class="error-state">
+    <p>Product not found.</p>
+    <a routerLink="/home">Go back</a>
+  </div>
+}

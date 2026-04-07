@@ -1,40 +1,111 @@
-.header{
+.header {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
-  padding: 15px;
-  background-color: rgba(192, 187, 187, 0.548);
-  border-bottom: 1px solid rgba(163, 159, 159, 0.938);
+  padding: 0 28px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 1000;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+}
 
-}
-nav{
-  display: flex;
-  justify-content: space-between;
-  list-style: none;
-  gap: 30px;
-}
-.logo{
-  float: left;
-  font-size: 18px;
-  color: rgb(16, 50, 114);
-  font-weight: 600;
-}
-a{
+.logo {
+  font-size: 20px;
+  font-weight: 800;
+  color: #6c63ff;
   text-decoration: none;
-  color: black;
-  padding: 10px;
-  border-radius: 10px ;
-  align-items: center;
-  text-align: center;
-
+  letter-spacing: -0.5px;
 }
 
-a.active{
-  background-color: rgb(36, 89, 202);
-  color:  white;
+.search-bar {
+  display: flex;
+  gap: 8px;
+  flex: 1;
+  max-width: 380px;
+  margin: 0 32px;
+}
+
+.search-bar input {
+  flex: 1;
+  padding: 8px 16px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 10px;
+  outline: none;
+  font-size: 14px;
+  background: #f9fafb;
+  transition: border-color 0.2s;
+}
+
+.search-bar input:focus {
+  border-color: #6c63ff;
+  background: #fff;
+}
+
+.search-bar button {
+  padding: 8px 18px;
+  background: #6c63ff;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.search-bar button:hover {
+  background: #5a52e0;
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #374151;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.2s, color 0.2s;
+}
+
+nav a:hover {
+  background: #f3f4f6;
+}
+
+nav a.active {
+  background: #6c63ff;
+  color: #fff;
+}
+
+.cart-link {
+  position: relative;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 2px solid #fff;
 }

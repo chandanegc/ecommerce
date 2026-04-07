@@ -1,15 +1,48 @@
+@if(store.loading()) {
+  <div class="skeleton-container">
+    @for(item of [1,2,3,4,5,6]; track item) {
+      <div class="skeleton-card">
+        <div class="skeleton-img"></div>
+        <div class="skeleton-line"></div>
+        <div class="skeleton-line short"></div>
+      </div>
+    }
+  </div>
+} @else if(store.error()) {
+  <div class="error-state">
+    <span class="error-icon">⚠️</span>
+    <h2>Failed to load products</h2>
+    <p>{{ store.error() }}</p>
+    <button class="retry-btn" (click)="store.loadProducts()">Retry</button>
+  </div>
+} @else {
+  <!-- Category Filter Bar -->
+  <div class="category-container">
+    @for(cat of store.categories(); track cat) {
+      <button
+        class="category-btn"
+        [class.active]="store.activeCategory() === cat"
+        (click)="filterProducts(cat)"
+      >
+        {{ cat }}
+      </button>
+    }
+  </div>
 
-@if(!loading()){
-  <div class="product-container">@for(product of products(); track product){
-      <card [item] ="product"></card>
-  }
+  <!-- Product Count -->
+  <p class="product-count">
+    Showing <strong>{{ store.productCount() }}</strong> products
+  </p>
+
+  <!-- Product Grid -->
+  <div class="product-container">
+    @for(product of store.filteredProducts(); track product.id) {
+      <card [item]="product" />
+    }
+    @empty {
+      <div class="empty-state">
+        <p>No products found in this category.</p>
+      </div>
+    }
   </div>
 }
-@else {
-  <div style="height: 100vh; display: flex; align-items: center; justify-content: center;">
-    <h1>Loading...</h1>
-  </div>
-}
-
-
-

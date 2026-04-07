@@ -1,10 +1,14 @@
 <div class="card-container">
-  <img [src]="item?.img" class="card-img"  width="100%">
+  <img
+    (click)="navigate(item.id)"
+    [src]="item.img"
+    [alt]="item.name"
+    class="card-img"
+  />
   <div class="about">
-    <h3>{{item?.name}}</h3>
-    <h3>Price: ${{item?.price}}</h3>
-    <p>{{item?.description}} 
-    </p>
-    <button class="cart-btn" (click)="addToCart(item)">Add to cart</button>
+    <h3>{{ item.name }}</h3>
+    <span class="price">₹{{ item.price }}</span>
+    <p>{{ item.description }}</p>
+    <button class="cart-btn" (click)="addToCart(item)">🛒 Add to Cart</button>
   </div>
 </div>

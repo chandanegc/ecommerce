@@ -19,7 +19,7 @@ export class Cart {
     description: string;
     img: string;
     quantity: number;
-  }[] = [];
+  }[] = []; 
 
   get cartCount() {
     return this.cartItems.length;

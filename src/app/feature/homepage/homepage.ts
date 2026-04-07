@@ -1,6 +1,6 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Card } from '../../shared/components/card/card';
-import { Product } from '../../core/service/product';
+import { ProductStore } from '../../store/product.store';
 
 @Component({
   selector: 'app-homepage',
@@ -9,22 +9,16 @@ import { Product } from '../../core/service/product';
   templateUrl: './homepage.html',
   styleUrl: './homepage.css',
 })
-export class Homepage {
-  products = signal<any>([]);
-  loading = signal<boolean>(true);
-  constructor(private productService: Product) { };
+export class Homepage implements OnInit {
+  // Inject the global SignalStore — all state is reactive signals
+  protected store = inject(ProductStore);
 
-  ngOnInit(){
-    this.productService.getProducts().subscribe({
-      next:(data:any)=>{
-        this.products.set(data);
-        this.loading.set(false);
-        console.log("data",   this.products());
-      },
-      error:(err:any)=>{
-        console.log("err", err?.message);
-        this.loading.set(false);
-      }
-    })
+  ngOnInit(): void {
+    // Triggers API call only once — subsequent calls are no-ops (loaded guard)
+    this.store.loadProducts();
+  }
+
+  filterProducts(category: string): void {
+    this.store.filterByCategory(category);
   }
 }

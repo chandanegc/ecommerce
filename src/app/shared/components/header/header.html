@@ -1,8 +1,18 @@
 <div class="header">
-  <div class="logo">Mappls</div>
+  <a class="logo" routerLink="/home">Mappls</a>
+
+  <div class="search-bar">
+    <input type="text" #searchValue placeholder="Search products..." (keyup.enter)="search(searchValue.value)" />
+    <button (click)="search(searchValue.value)">Search</button>
+  </div>
+
   <nav>
     <a routerLink="/home" routerLinkActive="active">Products</a>
-    <a routerLink="/cart" routerLinkActive="active">Cart <span style="color: rgb(9, 39, 75); border-radius: 5px; padding: 2px; font-weight: 600; background-color: white;">{{cart.cartCount}}</span> </a>
-    <!-- @if(1){<a routerLink="/login" routerLinkActive="active">Login</a>} @else {<li>Logout</li>} -->
+    <a routerLink="/cart" routerLinkActive="active" class="cart-link">
+      Cart
+      @if (cartStore.cartCount() > 0) {
+      <span class="cart-badge">{{ cartStore.cartCount() }}</span>
+      }
+    </a>
   </nav>
 </div>

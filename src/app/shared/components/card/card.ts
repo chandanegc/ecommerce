@@ -1,5 +1,8 @@
 import { Component, Input } from '@angular/core';
-import { Cart } from '../../../core/service/cart';
+import { CartStore } from '../../../store/cart.store';
+import { Router } from '@angular/router';
+import { Product } from '../../models/product.model';
+import { inject } from '@angular/core';
 
 @Component({
   selector: 'card',
@@ -9,13 +12,16 @@ import { Cart } from '../../../core/service/cart';
   styleUrl: './card.css',
 })
 export class Card {
-  @Input() item:any={};
+  @Input() item!: Product;
 
-  constructor(private cart: Cart) {}
+  private cartStore = inject(CartStore);
+  private router = inject(Router);
 
-
-  addToCart(item: any) {
-    this.cart.addToCart(item);
+  addToCart(item: Product): void {
+    this.cartStore.addToCart(item);
   }
 
+  navigate(id: number | string): void {
+    this.router.navigate([`product/${id}`]);
+  }
 }

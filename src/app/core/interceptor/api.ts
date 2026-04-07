@@ -7,6 +7,5 @@ export const api: HttpInterceptorFn = (req, next) => {
       Authorization: 'Bearer my-token'
     }
   });
-console.log("Interceptor is working..")
   return next(modifiedReq);
 };
