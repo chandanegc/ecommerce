@@ -1,0 +1,18 @@
+.suggestion {
+    z-index: 1000;
+    width: 100%;
+    margin-top: 5px;
+}
+.container{
+    position: absolute; top: 10px; left: 10px; z-index: 1000; margin-top: 150px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+.input-box{
+    display: flex; gap: 10px; flex-direction: column;
+}
+.input-container{
+    display: flex; flex-direction: column; gap: 10px; 
+}

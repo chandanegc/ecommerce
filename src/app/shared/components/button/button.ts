@@ -13,4 +13,6 @@ export class Button {
   @Input() variant: 'primary' | 'secondary' | 'danger' | 'outline' = 'primary';
   @Input() disabled: boolean = false;
   @Input() loading: boolean = false;
+
+  
 }

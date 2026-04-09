@@ -1,0 +1,14 @@
+<div class="container">
+      <div class="input-container">
+         <div class="input-box">
+         <app-input-box #source label="Enter your location" [value]="selectLocation().placeName || ''" (valueChange)="onLocationChange($event, 'source')" placeholder="Enter your location"></app-input-box>
+       </div>
+        <div class="input-box ">
+         <app-input-box label="Enter your destination" #dest [value]="destination().placeName||''" (valueChange)="onLocationChange($event, 'destination')" placeholder="Enter your destination"></app-input-box>
+       </div>
+       <app-button (click)="onSearch(source.value,dest.value)" label="Search"></app-button>
+      </div>
+        <div class="suggestion">
+            <app-suggetion-box (select)="onSuggestionClick($event)"  [items]="suggestion()" labelKey="placeName"></app-suggetion-box>
+        </div>
+    </div>

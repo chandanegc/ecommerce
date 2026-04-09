@@ -17,6 +17,7 @@ export class InputBox {
   @Output() valueChange = new EventEmitter<string>();
 
   onInput(event: any) {
-    this.valueChange.emit(event.target.value);
+    this.value = event.target.value;
+    this.valueChange.emit(this.value);
   }
 }
