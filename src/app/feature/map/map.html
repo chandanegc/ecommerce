@@ -1,5 +1,5 @@
-
 <div class="map-container">
     <div id="map" style="width: 100vw; height: 100vh;"></div>
-    <app-map-search-card [destination]="destination"   [mapobject]="mapInstance()" [showMarker]="showMarker.bind(this)"></app-map-search-card>
+    <app-map-search-card [destination]="destination" [mapobject]="mapInstance()" [mapplsPlugin]="mapplsPlugin" [showMarker]="showMarker.bind(this)"
+        (searchEvent)="renderDirection($event)"></app-map-search-card>
 </div>

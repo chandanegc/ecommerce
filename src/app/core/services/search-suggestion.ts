@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -16,11 +16,8 @@ export class SearchSuggestionService {
   private readonly MAPPLS_SEARCH_SUGGESTION_KEY = environment.MAPPLS_SEARCH_SUGGESTION_KEY;
   private readonly cache = new Map<string, Suggestion[]>();
 
-  /**
-   * Fetches search suggestions from Mappls API.
-   * @param query The search query string.
-   * @returns Observable of SuggestionResponse.
-   */
+  searchSuggestionData = signal<SuggestionResponse>({ suggestedLocations: [] });
+
   getSearchSuggestion(query: string): Observable<SuggestionResponse> {
     const trimmedQuery = query.trim().toLowerCase();
 
@@ -40,6 +37,7 @@ export class SearchSuggestionService {
           if (res?.suggestedLocations) {
             this.cache.set(trimmedQuery, res.suggestedLocations);
             console.log(res.suggestedLocations);
+            this.searchSuggestionData.set(res);
           }
         },
         error: (err) => {

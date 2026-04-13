@@ -1,10 +1,11 @@
-import { Component, Input, signal, inject } from '@angular/core';
+import { Component, Input, signal, inject, Output, EventEmitter } from '@angular/core';
 import { SuggetionBox } from '../suggetion-box/suggetion-box';
 import { Button } from '../button/button';
 import { InputBox } from '../input-box/input-box';
 import { Suggestion } from '../../utils/constants';
 import { Data } from '../../../core/services/data';
 import { SearchSuggestionService } from '../../../core/services/search-suggestion';
+import { Functions } from '../../../core/services/functions';
 
 @Component({
   selector: 'app-map-search-card',
@@ -14,10 +15,13 @@ import { SearchSuggestionService } from '../../../core/services/search-suggestio
 })
 export class MapSearchCard {
   @Input() mapobject: any;
+  @Input() mapplsPlugin: any;
   @Input() showMarker!: (positions: any[]) => void;
+  @Output() searchEvent = new EventEmitter<{source: Suggestion, destination: Suggestion}>();
 
   private readonly data = inject(Data);
   private readonly suggestionService = inject(SearchSuggestionService);
+  private locationService = inject(Functions);
 
   suggestion = signal<Suggestion[]>([]);
   location = signal<string>('');
@@ -28,6 +32,10 @@ export class MapSearchCard {
   @Input() destination = signal<any>({} as any);
 
   onSearch(source: string, destination: string) {
+    this.searchEvent.emit({
+      source: this.selectLocation(),
+      destination: this.destination()
+    });
     console.log(`Searching from ${source} to ${destination}`);
   }
 
@@ -48,13 +56,16 @@ export class MapSearchCard {
         const locations = res.suggestedLocations || [];
         this.suggestion.set(locations);
         this.data.suggestion.set(locations);
-        if (this.showMarker) {
-          const markers = locations.map((loc: Suggestion) => ({
-            placeName: loc.placeName,
-            eLoc: loc.eLoc
-          }));
-          this.showMarker(markers);
-        }
+
+        // if (this.showMarker) {
+        //   const markers = locations.map((loc: Suggestion) => ({
+        //     placeName: loc.placeName,
+        //     eLoc: loc.eLoc
+        //   }));
+        //   this.showMarker(markers);
+        // }
+
+        this.locationService.addMarkers(this.mapobject, this.mapplsPlugin, locations); 
       },
       error: (err) => {
         console.error("[MapSearchCard] Search API Error:", err);

@@ -27,7 +27,7 @@ export interface ProductState {
 const initialState: ProductState = {
   products: [],
   filteredProducts: [],
-  activeCategory: 'all',
+  activeCategory: 'All',
   selectedProductId: null,
   loading: false,
   error: null,
